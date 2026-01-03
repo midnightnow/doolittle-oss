@@ -1,0 +1,10 @@
+{
+      "name": "feline-grimace-scale",
+      "version": "0.1.0",
+      "description": "Feline Grimace Scale annotated images for pain detection",
+      "license": "CC-BY-4.0",
+      "species": ["cat"],
+      "labels": ["FGS_score", "action_units", "pain_detected"],
+      "splits": ["train", "validation", "test"],
+      "source": "Doolittle Open Data Commons"
+    }

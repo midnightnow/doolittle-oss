@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "doolittle"
+version = "0.1.0"
+description = "Open-source primitives for AI-assisted interspecies communication"
+authors = ["Doolittle Collective <hello@doolittle.org>"]
+license = "Apache-2.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+numpy = "^1.24"
+pydantic = "^2.0"
+scipy = "^1.11"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4"
+pytest-cov = "^4.1"
+black = "^23.0"
+ruff = "^0.1"
+mypy = "^1.6"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+testpaths = ["packages"]
+python_files = "test_*.py"
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "I", "N", "W"]

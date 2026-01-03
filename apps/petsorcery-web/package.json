@@ -1,0 +1,10 @@
+{
+      "name": "petsorcery-web",
+      "version": "0.1.0",
+      "description": "Consumer web app for pet wellness monitoring",
+      "private": true,
+      "scripts": {
+        "dev": "next dev",
+        "build": "next build"
+      }
+    }
