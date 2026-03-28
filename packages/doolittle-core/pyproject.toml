@@ -8,7 +8,7 @@ authors = ["Doolittle OSS <oss@doolittle.dev>"]
 [tool.poetry.dependencies]
 python = "^3.9"
 pydantic = "^2.0.0"
-vetsorcery-sdk = { path = "../../../../../packages/python", develop = true }
+vetsorcery-sdk = { git = "https://github.com/midnightnow/aivet-sdk.git", subdirectory = "packages/python", tag = "v1.1.1" }
 
 [build-system]
 requires = ["poetry-core"]
