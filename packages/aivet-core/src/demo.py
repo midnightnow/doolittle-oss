@@ -29,7 +29,10 @@ def main():
     print(f"\nSession: {context.session_id}")
     print(f"Species: {context.species}")
     print(f"Patient: {context.patient_id}")
-    print(f"\nResult: {result}")
+    print(f"\nResult: Pain Probability: {result.pain_probability:.1%}, Triage Level: {result.triage_level.value}")
+    if result.recommendations:
+        for rec in result.recommendations:
+            print(f"  - {rec}")
 
     print("\n✅ Demo complete!")
     print("\nNote: This is a scaffold. Implement the primitives in:")

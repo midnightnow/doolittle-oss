@@ -2,12 +2,14 @@
 The main AiVet pipeline orchestrator.
 
 Coordinates vision, audio, and fusion primitives to produce
-unified triage assessments.
+unified triage assessments using SDK types.
 """
 
 from typing import Optional, Dict, Any
 from dataclasses import dataclass
 import numpy as np
+
+from vetsorcery_sdk.types import ClinicalResult, TriageLevel
 
 @dataclass
 class PipelineContext:
@@ -25,7 +27,7 @@ class AiVetPipeline:
     - Vision primitives (grimace, vitals)
     - Audio primitives (vocalization)
     - Fusion engine (Bayesian combination)
-    - Output formatting
+    - Output formatting into ClinicalResult
     """
 
     def __init__(self, context: PipelineContext):
@@ -39,11 +41,11 @@ class AiVetPipeline:
         self,
         image: Optional[np.ndarray] = None,
         audio: Optional[np.ndarray] = None,
-    ) -> Dict[str, Any]:
+    ) -> ClinicalResult:
         """
         Process a single frame (image + optional audio).
 
-        Returns a triage assessment.
+        Returns a unified ClinicalResult.
         """
         results = {}
 
@@ -57,21 +59,45 @@ class AiVetPipeline:
 
         # Fuse if we have any signals
         if results:
-            results["triage"] = self._fuse_signals(results)
+            triage_data = self._fuse_signals(results)
+            
+            # Map internal triage dict to standard ClinicalResult
+            return ClinicalResult(
+                pain_probability=triage_data.get("pain_probability", 0.0),
+                triage_level=triage_data.get("triage_level", TriageLevel.ROUTINE),
+                confidence=triage_data.get("confidence", 0.0),
+                recommendations=triage_data.get("recommendations", [])
+            )
 
-        return results
+        # Fallback if nothing to process
+        return ClinicalResult(
+            pain_probability=0.0,
+            triage_level=TriageLevel.ROUTINE,
+            confidence=0.0,
+            recommendations=["No input provided."]
+        )
 
     def _process_vision(self, image: np.ndarray) -> Dict[str, Any]:
         """Process visual input."""
-        # Placeholder - actual implementation in aivet-vision
-        return {"status": "not_implemented"}
+        return {"status": "not_implemented", "pain_probability": 0.5, "confidence": 0.5}
 
     def _process_audio(self, audio: np.ndarray) -> Dict[str, Any]:
         """Process audio input."""
-        # Placeholder - actual implementation in aivet-listen
         return {"status": "not_implemented"}
 
     def _fuse_signals(self, signals: Dict[str, Any]) -> Dict[str, Any]:
         """Fuse all signals into unified assessment."""
-        # Placeholder - actual implementation in aivet-core/fusion
-        return {"status": "not_implemented"}
+        # Simple mock logic for demonstration
+        vision_prob = signals.get("vision", {}).get("pain_probability", 0.0)
+        triage = TriageLevel.ROUTINE
+        if vision_prob > 0.7:
+            triage = TriageLevel.URGENT
+        elif vision_prob > 0.4:
+            triage = TriageLevel.SOON
+            
+        return {
+            "pain_probability": vision_prob,
+            "triage_level": triage,
+            "confidence": 0.8,
+            "recommendations": ["Generated via unified Doolittle-OSS"]
+        }

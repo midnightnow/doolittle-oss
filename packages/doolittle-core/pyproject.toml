@@ -1,11 +1,16 @@
+
 [tool.poetry]
 name = "doolittle-core"
 version = "0.1.0"
-description = "Shared types, schemas (BioSignal), and species configurations"
-authors = ["Doolittle Collective <hello@doolittle.org>"]
-license = "Apache-2.0"
+description = "Core schemas for Doolittle"
+authors = ["Doolittle OSS <oss@doolittle.dev>"]
 
 [tool.poetry.dependencies]
-python = "^3.10"
-numpy = "^1.24"
-pydantic = "^2.0"
+python = "^3.9"
+pydantic = "^2.0.0"
+vetsorcery-sdk = { path = "../../../../../packages/python", develop = true }
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+

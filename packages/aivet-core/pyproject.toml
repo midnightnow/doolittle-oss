@@ -1,11 +1,16 @@
+
 [tool.poetry]
 name = "aivet-core"
 version = "0.1.0"
-description = "The Brain - Bayesian fusion and triage engine"
-authors = ["Doolittle Collective <hello@doolittle.org>"]
-license = "Apache-2.0"
+description = "Core pipeline for Doolittle"
+authors = ["Doolittle OSS <oss@doolittle.dev>"]
 
 [tool.poetry.dependencies]
-python = "^3.10"
-numpy = "^1.24"
-pydantic = "^2.0"
+python = "^3.9"
+numpy = "^1.24.0"
+vetsorcery-sdk = { path = "../../../../../packages/python", develop = true }
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+

@@ -10,6 +10,9 @@ from typing import Dict, List, Optional, Any
 from pydantic import BaseModel, Field
 from datetime import datetime
 
+# Import base types from the unified SDK
+from vetsorcery_sdk.types import TriageLevel, ClinicalResult, Species as SDKSpecies
+
 class Species(str, Enum):
     """Supported species for analysis."""
     CAT = "cat"
@@ -50,6 +53,9 @@ class BioSignal(BaseModel):
     class Config:
         frozen = True
 
+# PainAssessment is replaced by or extends ClinicalResult in actual use,
+# but we keep it here as an intermediate Doolittle-specific object before 
+# yielding the final ClinicalResult.
 class PainAssessment(BaseModel):
     """Pain assessment result from any primitive or fusion."""
     pain_probability: float = Field(ge=0.0, le=1.0)
@@ -58,10 +64,5 @@ class PainAssessment(BaseModel):
     modality: SignalModality
     timestamp: float
 
-class TriageLevel(str, Enum):
-    """Clinical triage urgency levels."""
-    ROUTINE = "routine"
-    LOW = "low"
-    MODERATE = "moderate"
-    URGENT = "urgent"
-    EMERGENCY = "emergency"
+# TriageLevel is now imported directly from the SDK, so we do not redefine it here.
+
